@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name  : Angular Deploy Workflow
+on    : [push, workflow_dispatch]
+jobs  :
+  test  :
+    runs-on  : windows-2022
+    steps    : 
+      - name : Get Code
+        uses : actions/checkout@v3
+      - name : Install NodeJS
+        uses : actions/setup-node@v3
+        with :
+          node-version  : 18      
+  deploy  :
+    needs    : test
+    runs-on  : windows-2022
+    steps    : 
+      - name : Get Code
+        uses : actions/checkout@v3
+      - name : Install NodeJS
+        uses : actions/setup-node@v3
+        with :
+          node-version  : 18      
+      - name : Install Dependencies
+        run  : npm ci  
+      - name : Build Project
+        run  : npm run build
+      - name : Deploy
+        run  : echo "Deploying..."
